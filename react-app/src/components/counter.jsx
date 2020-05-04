@@ -1,37 +1,49 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  constructor() {
-    super();
-    this.increment = this.increment.bind(this);
-  }
-  state = {
-    count: 1,
-    url: "https://picsum.photos/200",
-  };
   render() {
+    console.log();
     return (
       <div>
         <span style={{ fontSize: 10 }} className={this.getCountClasses()}>
           {this.formatCount()}
         </span>
-        <button onClick={this.increment} className="btn btn-secondary btn-sm">
-          Increment
+        <button
+          onClick={() => this.props.onInc(this.props.id)}
+          className="btn btn-secondary btn-sm m-2"
+        >
+          +
+        </button>
+        <button
+          onClick={() => this.props.onDec(this.props.id)}
+          className={this.getDecrementClasses()}
+        >
+          -
+        </button>
+        <button
+          className="btn-danger btn p-1"
+          onClick={() => this.props.onDelete(this.props.id)}
+        >
+          Delete
         </button>
       </div>
     );
   }
-  increment() {
-    this.setState({ count: this.state.count + 1 });
-  }
+
   getCountClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary";
+    classes += this.props.value === 0 ? "warning" : "primary";
     return classes;
   }
   formatCount() {
-    const count = this.state.count;
+    const count = this.props.value;
     return count === 0 ? "Zero" : count;
+  }
+
+  getDecrementClasses() {
+    let classes = "btn btn-secondary btn-sm m-2 ";
+    classes += this.props.value === 0 ? "disabled" : "";
+    return classes;
   }
 }
 
